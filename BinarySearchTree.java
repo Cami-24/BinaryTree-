@@ -1,30 +1,35 @@
-public class BinarySearchTree {
-    Node root;
+public class BinarySearchTree<E extends BinarySearchTree.KeyValue> {
+    Node<E> root;
 
     public BinarySearchTree() {
         root = null;
     }
 
+    public interface KeyValue {
+        String getKey();
+        String getValue();
+    }
+
     // Insertion operation
-    void insert(Association<String, String> data) {
+    void insert(E data) {
         root = insertRec(root, data);
     }
 
-    Node insertRec(Node root, Association<String, String> data) {
-    if (root == null) return new Node(data);
+    Node<E> insertRec(Node<E> root, E data) {
+        if (root == null) return new Node<E>(data);
 
-    if (data.key.compareTo(root.data.key) < 0)
-        root.left = insertRec(root.left, data);
-    else if (data.key.compareTo(root.data.key) > 0)
-        root.right = insertRec(root.right, data);
+        if (data.getKey().compareTo(root.data.getKey()) < 0)
+            root.left = insertRec(root.left, data);
+        else if (data.getKey().compareTo(root.data.getKey()) > 0)
+            root.right = insertRec(root.right, data);
 
-    return root;
-}
+        return root;
+    }
 
-    String minValue(Node root) {
-        String minv = root.data.key;
+    String minValue(Node<E> root) {
+        String minv = root.data.getKey();
         while (root.left != null) {
-            minv = root.left.data.key;
+            minv = root.left.data.getKey();
             root = root.left;
         }
         return minv;
@@ -35,13 +40,13 @@ public class BinarySearchTree {
         return searchRec(root, key.toLowerCase());
     }
 
-    String searchRec(Node root, String key) {
+    String searchRec(Node<E> root, String key) {
         if (root == null) return null;
 
-        if (root.data.key.equals(key))
-            return root.data.value;
+        if (root.data.getKey().equals(key))
+            return root.data.getValue();
 
-        if (key.compareTo(root.data.key) < 0)
+        if (key.compareTo(root.data.getKey()) < 0)
             return searchRec(root.left, key);
 
         return searchRec(root.right, key);
@@ -53,10 +58,10 @@ public class BinarySearchTree {
         System.out.println("\n");
     }
 
-    void inorderRec(Node root) {
+    void inorderRec(Node<E> root) {
         if (root != null) {
             inorderRec(root.left);
-            System.out.print(root.data.key + " ");
+            System.out.print(root.data.getKey() + " ");
             inorderRec(root.right);
         }
     }
@@ -68,9 +73,9 @@ public class BinarySearchTree {
         
     }
 
-    void preorderRec(Node root) {
+    void preorderRec(Node<E> root) {
         if (root != null) {
-            System.out.print(root.data.key + " ");
+            System.out.print(root.data.getKey() + " ");
             preorderRec(root.left);
             preorderRec(root.right);
         }
@@ -82,11 +87,11 @@ public class BinarySearchTree {
         System.out.println("\n");
     }
 
-    void postorderRec(Node root) {
+    void postorderRec(Node<E> root) {
         if (root != null) {
             postorderRec(root.left);
             postorderRec(root.right);
-            System.out.print(root.data.key + " ");
+            System.out.print(root.data.getKey() + " ");
         }
     }
 

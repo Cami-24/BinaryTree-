@@ -1,8 +1,8 @@
-public class Node {
-    Association<String, String> data;
-    Node left, right;
+public class Node<E> {
+    E data;
+    Node<E> left, right;
 
-    public Node(Association<String, String> data) {
+    public Node(E data) {
         this.data = data;
         left = right = null;
     }

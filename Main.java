@@ -3,7 +3,7 @@ import java.io.FileReader;
 
 public class Main{
     public static void main(String[] args) throws Exception{
-        BinarySearchTree tree = new BinarySearchTree();
+        BinarySearchTree<Association<String, String>> tree = new BinarySearchTree<>();
 
         //leer el archivo y cargar el árbol
         BufferedReader br = new BufferedReader(new FileReader("diccionario.txt"));
